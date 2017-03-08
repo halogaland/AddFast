@@ -1,4 +1,5 @@
-#Moving text
+# AddFast
+# Test your skill in adding two numbers
 
 import pygame, sys
 from pygame.locals import *
