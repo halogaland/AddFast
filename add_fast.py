@@ -10,7 +10,7 @@ pygame.init()
 
 # set up the window
 windowSurface = pygame.display.set_mode((500, 400), 0, 32)
-pygame.display.set_caption('Hello world!')
+pygame.display.set_caption('addFast')
 
 # set up the colors
 BLACK = (0, 0, 0)
