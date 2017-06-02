@@ -38,23 +38,53 @@ restart = 2
 game_state = start
 
 #strings
-start_str = ''
+start_str    = ''
 question_str = ''
-input_str = ''
+input_str    = ''
 response_str = ''
-stats_str = ''
-restart_str = ''
+stats_str    = ''
+restart_str  = ''
+
+# Number of digits entered
+num_num_keys = 0
+
+# Question inputs
+question_input_a = 0
+question_input_b = 0
 
 # set up start screen
 start_str = 'Hit Enter to Start'
 
 # set up question
-question_input_a = randint(0 , 9)
-question_input_b = randint(0 , 9)
-question_str = str(question_input_a) + ' + ' + str(question_input_b)
+def set_up_new_question():
+    global question_input_a, question_input_b, question_str
 
-# set up input
-num_num_keys = 0
+    question_input_a = randint(0 , 9)
+    question_input_b = randint(0 , 9)
+    question_str     = str(question_input_a) + ' + ' + str(question_input_b)
+
+
+# evaluate answer
+def evaluate_answer():
+    global question_input_a, question_input_b, input_str
+    
+    return (question_input_a + question_input_b) == int(input_str) 
+
+
+# respond to a right answer
+def right_answer():
+    global response_str, num_of_right_ans
+
+    response_str += '. Great! Next question.'
+    num_of_right_ans += 1 # Update stats
+
+
+# respond to a wrong answer
+def wrong_answer():
+    global response_str
+
+    response_str += '. Wrong! Next question.'
+
 
 # Set up stats
 num_of_qs = 0
@@ -145,7 +175,7 @@ def playHandleEvents() :
             if event.key == K_RETURN :
                 if input_str :
                     response_str = 'You entered : ' + input_str
-                    if (question_input_a + question_input_b) == int(input_str) :
+                    if (evaluate_answer()) :
                         response_str += '. Great! Next question.'
                         num_of_right_ans += 1 # Update stats
                         increaseRate()
@@ -173,15 +203,15 @@ def playDraw() :
     windowSurface.fill(WHITE)
     
     # put all text on screen
-    question_text = basicFont.render(question_str, True, GREEN)
-    input_text = basicFont.render(input_str, True, BLUE)
-    response_text = smallFont.render(response_str, True, RED)
-    stats_text = basicFont.render(stats_str, True, BLACK)
+    question_text = basicFont.render( question_str, True, GREEN)
+    input_text    = basicFont.render(    input_str, True,  BLUE)
+    response_text = smallFont.render( response_str, True,   RED)
+    stats_text    = basicFont.render(    stats_str, True, BLACK)
     
-    windowSurface.blit(question_text, (question_text_x, question_text_y))
-    windowSurface.blit(input_text, (input_text_x, input_text_y))
-    windowSurface.blit(response_text, (response_text_x, response_text_y))
-    windowSurface.blit(stats_text, (stats_text_x, stats_text_y))
+    windowSurface.blit( question_text, (question_text_x, question_text_y))
+    windowSurface.blit(    input_text, (   input_text_x,    input_text_y))
+    windowSurface.blit( response_text, (response_text_x, response_text_y))
+    windowSurface.blit(    stats_text, (   stats_text_x,    stats_text_y))
     
     progress_width = int(478 * time_frame)
 
